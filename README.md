@@ -1,0 +1,1 @@
+# vkinder-team-diplom
