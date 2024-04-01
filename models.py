@@ -18,6 +18,7 @@ class User(Base):
     age = sq.Column(sq.Integer, nullable=False)
     sex_id = sq.Column(sq.Integer, nullable=False)
     city = sq.Column(sq.String(length=50), nullable=False)
+    city_id = sq.Column(sq.Integer, nullable=False)
 
 
 class Person(Base):

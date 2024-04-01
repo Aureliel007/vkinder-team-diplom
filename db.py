@@ -1,9 +1,16 @@
 import sqlalchemy as sq
 from sqlalchemy.orm import sessionmaker
+import configparser
 
 from models import create_tables, User, Person, Photo
-from config import DSN
 
+
+config = configparser.ConfigParser()
+config.read('config.ini')
+user = config['Postgres']['user']
+password = config['Postgres']['password']
+db = config['Postgres']['name_db']
+DSN = f'postgresql://{user}:{password}@localhost:5432/{db}'
 
 engine = sq.create_engine(DSN)
 create_tables(engine)
@@ -67,6 +74,16 @@ def change_is_favourite(vk_id: int):
     else:
         person.update({Person.like: False})
     session.commit()
+
+
+def get_persons(vk_id: int):
+    # Получение всех объектов модели person
+    persons = session.query(Person).filter_by(user_vk_id=vk_id, like=None).all()
+    return persons
+
+
+def get_person_photos(vk_id: int):
+    return session.query(Photo).join(Person.photos).filter(Photo.person_vk_id == vk_id).all()
 
 
 def commit_session():
