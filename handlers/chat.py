@@ -101,7 +101,7 @@ async def bye_handler(message: Message):
 @labler.message(text='мой список')
 async def bye_handler(message: Message):
     favorite = like_list()
-    await message.answer('Сейчас покажу все твой избранный список!')
+    await message.answer('Сейчас покажу весь твой избранный список!')
     for partner in favorite:
         await message.answer(f'{partner[0].first_name} {partner[0].last_name}',
                              partner[0].vk_link)
